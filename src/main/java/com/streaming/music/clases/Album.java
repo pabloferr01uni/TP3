@@ -1,4 +1,4 @@
-package com.example.demo.clases;
+package com.streaming.music.clases;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.demo.errores;
+package com.streaming.music.exception;
 
 public class RatingInvalido extends RuntimeException {
     public RatingInvalido (double valorRecibido){

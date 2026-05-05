@@ -1,10 +1,10 @@
-package com.example.demo.clases;
+package com.streaming.music.clases;
 
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.example.demo.errores.RatingInvalido;
+import com.streaming.music.exception.RatingInvalido;
 
 import lombok.Getter;
 import lombok.Setter;
