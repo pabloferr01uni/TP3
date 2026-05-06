@@ -14,8 +14,8 @@ import lombok.Setter;
 public class Cancion {
     private UUID id;
     private String titulo;
-    private String artista;
-    private String album;
+    private Artista artista;
+    private Album album;
     private Genero genero;
     private int duracionSegundos;
     private AtomicInteger reproducciones;
@@ -24,7 +24,7 @@ public class Cancion {
 
  
 
-    public Cancion(UUID id, String titulo, String artista, String album, Genero genero, int duracionSegundos, AtomicInteger reproducciones, double rating, LocalDate fechaLanzamiento){
+    public Cancion(UUID id, String titulo, Artista artista, Album album, Genero genero, int duracionSegundos, AtomicInteger reproducciones, double rating, LocalDate fechaLanzamiento){
 
         this.id=id;
         this.titulo=titulo;

@@ -10,7 +10,7 @@ import lombok.Setter;
 
 public class Album {
     private String titulo;
-    private String anio;
+    private int anio;
     private Artista artista;
     private List<Cancion> canciones = new ArrayList<>();
     private Productora productora;
