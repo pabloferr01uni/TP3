@@ -1,10 +1,15 @@
 package com.streaming.music.service;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.streaming.music.clases.Artista;
 import com.streaming.music.clases.Cancion;
+import com.streaming.music.clases.Genero;
 
 @Service
 
@@ -36,5 +41,34 @@ public List<Cancion> filtradoPersonalizado(List<Cancion>canciones, String genero
     .collect(Collectors.toList());
 
 }
+
+//Promedio de duracion por genero
+
+public Map<Genero,Double>obtenerPormedioPorGenero(List<Cancion>canciones){
+    return canciones.stream()
+    .collect(Collectors.groupingBy(Cancion::getGenero,
+        Collectors.averagingInt(Cancion::getDuracionSegundos)
+    ));
+}
+
+//Artista mas popular
+
+public Optional<Artista>ArtistaMasPopular(List<Cancion>canciones){
+    return canciones.stream()
+    .max(Comparator.comparingInt(c->c.getReproducciones().get()))
+    .map(Cancion::getArtista);
+}
+
+//Distribucion por decadas
+
+public Map<Integer,List<Cancion>>obtenerDistribucionPorDecadas(List<Cancion>canciones){
+    return canciones.stream()
+    .collect(Collectors.groupingBy(c->{
+        int anio=c.getAlbum().getAnio();
+        return (anio/10)*10;
+    }));
+}
+
+
 
 }
