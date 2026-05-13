@@ -7,10 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.streaming.music.exception.RatingInvalido;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter @Setter
+@NoArgsConstructor
 public class Cancion {
     private UUID id;
     private String titulo;

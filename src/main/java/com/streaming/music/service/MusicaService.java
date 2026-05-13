@@ -1,4 +1,6 @@
 package com.streaming.music.service;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +70,53 @@ public Map<Integer,List<Cancion>>obtenerDistribucionPorDecadas(List<Cancion>canc
         return (anio/10)*10;
     }));
 }
+
+//Generar playlist exacta
+
+public List<Cancion>generarPlayListExacta(List<Cancion>canciones,int minutosObjetivo){
+    int segundosObjetivo=minutosObjetivo*60;
+    return buscarCombinacion(canciones,segundosObjetivo);
+}
+
+private List<Cancion>buscarCombinacion(List<Cancion>canciones, int tiempoRestante){
+    //Puede pasar que encontremos la suma exacta.
+    if (tiempoRestante==0) return new ArrayList<>();
+    //Tambien puede ser que no haya mas canciones o el timepo se pasó.
+    if(canciones.isEmpty()||tiempoRestante<0)
+        return null;
+
+    //Tomamos la primera cancion de la lista actual.
+    Cancion actual = canciones.get(0);
+    List<Cancion>sublista=canciones.subList(1,canciones.size());
+
+    //Opcion A incluimos la cancion actual.
+    List<Cancion>conActual=buscarCombinacion(sublista,tiempoRestante-actual.getDuracionSegundos());
+    
+    if(conActual!=null){
+        List<Cancion> resultado = new ArrayList<>(conActual);
+        resultado.add(actual);
+        return resultado;
+    }
+//Opcion B no incluimos la cancion actual y probamos con el resultado
+return buscarCombinacion(sublista, tiempoRestante);
+    
+}
+
+//Busqueda binaria por titulo
+
+public int buscarCancionPorTitulo(List<Cancion>canciones, String titulo){
+    //Primero ordenamos por el titulo (Orden natural)
+    canciones.sort(Comparator.comparing(Cancion::getTitulo));
+
+    //Creamos un objeto temporal para poder comparar.
+    Cancion buscada = new Cancion();
+    buscada.setTitulo(titulo);
+
+    return Collections.binarySearch(canciones,buscada,Comparator.comparing(Cancion::getTitulo));
+}
+
+
+
 
 
 
