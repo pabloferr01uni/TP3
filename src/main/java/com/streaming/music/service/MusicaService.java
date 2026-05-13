@@ -115,8 +115,25 @@ public int buscarCancionPorTitulo(List<Cancion>canciones, String titulo){
     return Collections.binarySearch(canciones,buscada,Comparator.comparing(Cancion::getTitulo));
 }
 
+//Ordenamiento filtradoPersonalizado
 
+public void ordenarCatalogoPersonalizado(List<Cancion>canciones){
+    canciones.sort(
+        Comparator.comparing((Cancion c)-> c.getArtista().getNombre())
+        .thenComparing(Cancion::getFechaLanzamiento)
+        .reversed()
+    );
+}
 
+//Busqueda lineal con predicados multiples(genero,año y rating)
+
+public List<Cancion> filtrarPorPredicadosMultiples(List<Cancion>canciones,String genero, int anioReferencia, double ratingMinimo){
+    return canciones.stream()
+    .filter(c->c.getGenero().name().equalsIgnoreCase(genero))
+    .filter(c->c.getFechaLanzamiento().getYear()>anioReferencia)
+    .filter(c->c.getRating()>ratingMinimo)
+    .toList();
+}
 
 
 
