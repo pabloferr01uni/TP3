@@ -20,7 +20,7 @@ public class Cancion {
     private Album album;
     private Genero genero;
     private int duracionSegundos;
-    private AtomicInteger reproducciones;
+    private AtomicInteger reproducciones = new AtomicInteger(0);
     private double rating;
     private LocalDate fechaLanzamiento;
 
@@ -39,6 +39,7 @@ public class Cancion {
         this.fechaLanzamiento=fechaLanzamiento;
 
     }
+    
 
     public void setRating(double rating){
         if(rating>=0.0 && rating<=5.0){

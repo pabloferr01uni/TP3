@@ -4,6 +4,7 @@ public enum Genero {
     ROCK,
     POP,
     JAZZ,
+    TRAP,
     ELECTRONICA,
     CLASICA
 }

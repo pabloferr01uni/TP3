@@ -210,6 +210,19 @@ public List<Album> buscarAlbumesPorNombre(String titulo) {
             .toList();
 }
 
+//recomendar para el controller
+
+public List<Cancion> recomendar(String estrategia, String valor) {
+
+    if ("POPULARIDAD".equalsIgnoreCase(estrategia)) {
+        return obtenerTop10MasReproducidos(todasLasCanciones);
+    }
+    return todasLasCanciones;
+}
+
+
+
+
 }
 
 

@@ -3,14 +3,14 @@ package com.streaming.music.clases;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-@Setter
-@Getter
+@NoArgsConstructor
+@Getter @Setter
 public class Artista {
     private UUID id;
     private String nombre;
-    private List<Album>albumes=new ArrayList<>(); 
+    // La inicializamos acá para que nunca sea null y no necesite constructor
+    private List<Album> albumes = new ArrayList<>(); 
 }
