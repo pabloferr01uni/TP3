@@ -2,6 +2,8 @@ package com.streaming.music.clases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,7 @@ import lombok.Setter;
 @Setter
 
 public class Album {
+    private UUID id;
     private String titulo;
     private int anio;
     private Artista artista;

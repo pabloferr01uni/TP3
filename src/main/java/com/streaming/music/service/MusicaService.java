@@ -1,14 +1,18 @@
 package com.streaming.music.service;
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.streaming.music.clases.Album;
 import com.streaming.music.clases.Artista;
 import com.streaming.music.clases.Cancion;
 import com.streaming.music.clases.Genero;
@@ -17,7 +21,15 @@ import com.streaming.music.clases.Genero;
 
 
 public class MusicaService {
-    
+
+private List<Cancion>todasLasCanciones=new ArrayList<>();
+
+public List<Cancion>getListaCanciones(){
+    return this.todasLasCanciones;
+}
+
+
+
 //Filtro general
 public List<Cancion> filtradoPersonalizado(List<Cancion>canciones, String generoBusqueda,String artistaBusqueda,int anioInicio,int anioFin,int ratingMinimo){
 
@@ -135,6 +147,70 @@ public List<Cancion> filtrarPorPredicadosMultiples(List<Cancion>canciones,String
     .toList();
 }
 
+//Buscar por ID para el controller
+public Optional<Cancion>buscarPorId(UUID id){
+    return todasLasCanciones.stream()
+    .filter(c->c.getId().equals(id))
+    .findFirst();
+}
 
+//Filtrar por musico y artista para el controller
+
+public List<Cancion> filtrarPorTituloYArtista(String tituloReferencia, String nombreArtista) {
+    return todasLasCanciones.stream() // Usamos la lista que ya es atributo de la clase
+        .filter(c -> tituloReferencia == null || c.getTitulo().equalsIgnoreCase(tituloReferencia))
+        .filter(c -> nombreArtista == null || c.getArtista().getNombre().equalsIgnoreCase(nombreArtista))
+        .toList();
+}
+
+//Metodo para el Cancioncontroller
+
+public void registrarReproduccion(UUID id){
+    this.buscarPorId(id).ifPresent(cancion->{
+        cancion.getReproducciones().incrementAndGet();
+    });
+}
+
+//Metodos para ArtistaController
+
+
+public List<Artista> getListaArtistas() {
+    return todasLasCanciones.stream()
+            .map(Cancion::getArtista) 
+            .distinct()               
+            .toList();
+}
+
+
+
+public Optional<Artista> buscarArtistaPorId(UUID id) {
+    return getListaArtistas().stream()
+            .filter(a -> a.getId().equals(id))
+            .findFirst();
+}
+
+//Metodos para AlbumController
+
+public List<Album> getListaAlbumes() {
+    return todasLasCanciones.stream()
+            .map(Cancion::getAlbum)
+            .distinct()
+            .toList();
+}
+
+public Optional<Album> buscarAlbumPorId(UUID id) {
+    return getListaAlbumes().stream()
+            .filter(a -> a.getId().equals(id))
+            .findFirst();
+}
+
+public List<Album> buscarAlbumesPorNombre(String titulo) {
+    return getListaAlbumes().stream()
+            .filter(a -> a.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+            .toList();
+}
 
 }
+
+
+
